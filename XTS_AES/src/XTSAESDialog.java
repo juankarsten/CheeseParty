@@ -269,7 +269,7 @@ public class XTSAESDialog extends javax.swing.JDialog {
         XTSAES xtsaes=new XTSAES();
         byte[] P=inputReader.read();
         byte[] keys=keyReader.read();
-        byte[] outputs=XTSUtils.unify(xtsaes.XTSAESEnc(P, keys, P.length/16));
+        byte[] outputs=XTSUtils.unify(xtsaes.XTSAESEnc(P, keys, P.length/16+1));
         
         outputWriter.write(outputs);
     }//GEN-LAST:event_encryptButtonActionPerformed

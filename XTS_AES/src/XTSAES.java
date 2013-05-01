@@ -31,6 +31,8 @@ public class XTSAES {
 //        primitiveMultiplication=new PrimitiveMultiplication(aes.encrypt(tweak), blocksize);
 //    }
     
+    private final int TOTAL_THREAD=100;
+    
     public byte[] XTSAESBlockEnc(byte[] key1, byte[] P, int j,PrimitiveMultiplication primitiveMultiplication){
         byte T[]=primitiveMultiplication.getSequenceMultiplication(j);
         byte PP[]= XTSUtils.XOR(T, P);
