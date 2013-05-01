@@ -44,8 +44,11 @@ public class XTSAESDialog extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("XTS-AES by Juan-Fajar-Iqbal");
+        setResizable(false);
 
         inputButton.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         inputButton.setText("Browse..");
@@ -118,10 +121,15 @@ public class XTSAESDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setText("Kriptografi dan Keamanan Informasi - FASILKOM UI 2013");
+        jLabel3.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        jLabel3.setText("Kriptografi dan Keamanan Informasi -");
 
+        jLabel4.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Juan Karsten, M. Fajarrizky, M.Iqbal");
+
+        jLabel2.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        jLabel2.setText(" FASILKOM UI 2013");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -171,8 +179,10 @@ public class XTSAESDialog extends javax.swing.JDialog {
                         .addComponent(decryptButton)
                         .addGap(185, 185, 185))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(136, 136, 136))))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addGap(126, 126, 126))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,9 +215,11 @@ public class XTSAESDialog extends javax.swing.JDialog {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap())
         );
 
         pack();
@@ -344,6 +356,7 @@ public class XTSAESDialog extends javax.swing.JDialog {
     private javax.swing.JLabel inputLabel1;
     private javax.swing.JLabel inputLabel2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JSeparator jSeparator1;
