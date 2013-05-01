@@ -258,6 +258,20 @@ public class XTSAESDialog extends javax.swing.JDialog {
 
     private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptButtonActionPerformed
         // TODO add your handling code here:
+        String input=pathInputField.getText();
+        String key=pathKeyField.getText();
+        String output=pathOutputField.getText();
+        
+        FileByteReader inputReader=new FileByteReader(input);
+        FileByteReader keyReader=new FileByteReader(key);
+        FileByteWriter outputWriter=new FileByteWriter(output);
+        
+        XTSAES xtsaes=new XTSAES();
+        byte[] P=inputReader.read();
+        byte[] keys=keyReader.read();
+        byte[] outputs=XTSUtils.unify(xtsaes.XTSAESEnc(P, keys, P.length/16));
+        
+        outputWriter.write(outputs);
     }//GEN-LAST:event_encryptButtonActionPerformed
 
     private void decryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decryptButtonActionPerformed
