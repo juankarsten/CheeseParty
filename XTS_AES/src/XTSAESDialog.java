@@ -240,6 +240,7 @@ public class XTSAESDialog extends javax.swing.JDialog {
 
     private void pathKeyFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pathKeyFieldActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_pathKeyFieldActionPerformed
 
     private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputButtonActionPerformed
@@ -258,6 +259,7 @@ public class XTSAESDialog extends javax.swing.JDialog {
 
     private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptButtonActionPerformed
         // TODO add your handling code here:
+
         String input=pathInputField.getText();
         String key=pathKeyField.getText();
         String output=pathOutputField.getText();
@@ -276,6 +278,10 @@ public class XTSAESDialog extends javax.swing.JDialog {
 
     private void decryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decryptButtonActionPerformed
         // TODO add your handling code here:
+        String outputPath = this.pathOutputField.getText();
+        FileByteReader fbr = new FileByteReader(outputPath);
+        byte[] baca=fbr.read();
+        
     }//GEN-LAST:event_decryptButtonActionPerformed
 
     /**
