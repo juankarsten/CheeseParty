@@ -1,5 +1,12 @@
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 /*
@@ -44,8 +51,11 @@ public class XTSAESDialog extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("XTS-AES by Juan-Fajar-Iqbal");
+        setResizable(false);
 
         inputButton.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         inputButton.setText("Browse..");
@@ -118,10 +128,15 @@ public class XTSAESDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setText("Kriptografi dan Keamanan Informasi - FASILKOM UI 2013");
+        jLabel3.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        jLabel3.setText("Kriptografi dan Keamanan Informasi -");
 
+        jLabel4.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Juan Karsten, M. Fajarrizky, M.Iqbal");
+
+        jLabel2.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        jLabel2.setText(" FASILKOM UI 2013");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -171,8 +186,10 @@ public class XTSAESDialog extends javax.swing.JDialog {
                         .addComponent(decryptButton)
                         .addGap(185, 185, 185))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(136, 136, 136))))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addGap(126, 126, 126))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,9 +222,11 @@ public class XTSAESDialog extends javax.swing.JDialog {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap())
         );
 
         pack();
@@ -257,6 +276,7 @@ public class XTSAESDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_pathOutputFieldActionPerformed
 
     private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptButtonActionPerformed
+<<<<<<< HEAD
         // TODO add your handling code here:
         String input=pathInputField.getText();
         String key=pathKeyField.getText();
@@ -272,10 +292,65 @@ public class XTSAESDialog extends javax.swing.JDialog {
         byte[] outputs=XTSUtils.unify(xtsaes.XTSAESEnc(P, keys, P.length/16+1));
         
         outputWriter.write(outputs);
+=======
+        BufferedReader buff = null;
+        try {
+            // TODO add your handling code here:
+
+
+            String input = pathInputField.getText();
+            String key = pathKeyField.getText();
+            String output = pathOutputField.getText();
+            FileByteReader inputReader = new FileByteReader(input);
+            FileByteReader keyReader = new FileByteReader(key);
+            File file = new File(key);
+            buff = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            String keyInput = buff.readLine();
+
+            FileByteWriter outputWriter = new FileByteWriter(output);
+            XTSAES xtsaes = new XTSAES();
+            byte[] P = inputReader.read();
+            byte[] keys = Util.hex2byte(keyInput);
+            byte[] outputs = XTSUtils.unify(xtsaes.XTSAESEnc(P, keys, P.length / 16 + 1));
+            outputWriter.write(outputs);
+        } catch (IOException ex) {
+            Logger.getLogger(XTSAESDialog.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                buff.close();
+            } catch (IOException ex) {
+                Logger.getLogger(XTSAESDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+>>>>>>> 9df6b7451915e4771f839c2dfa0ee1be4155ea7a
     }//GEN-LAST:event_encryptButtonActionPerformed
 
     private void decryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decryptButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            BufferedReader reBuff = null;
+
+            String inputDec = pathInputField.getText();
+            String keyDec = pathKeyField.getText();
+            String outputDec = pathOutputField.getText();
+
+            FileByteReader inputReader = new FileByteReader(inputDec);
+            FileByteReader keyReader = new FileByteReader(keyDec);
+            FileByteWriter outputWriter = new FileByteWriter(outputDec);
+
+            File fileDec = new File(keyDec);
+            reBuff = new BufferedReader(new InputStreamReader(new FileInputStream(fileDec)));
+            String keyInputDec = reBuff.readLine();
+
+            XTSAES xtsaes = new XTSAES();
+            byte[] PDec = inputReader.read();
+            byte[] keysDec = Util.hex2byte(keyInputDec);
+            byte[] outputsDec = XTSUtils.unify(xtsaes.XTSAESDec(PDec, keysDec, PDec.length / 16 + 1));
+            outputWriter.write(outputsDec);
+        } catch (IOException ex) {
+            Logger.getLogger(XTSAESDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_decryptButtonActionPerformed
 
     /**
@@ -327,6 +402,7 @@ public class XTSAESDialog extends javax.swing.JDialog {
     private javax.swing.JLabel inputLabel1;
     private javax.swing.JLabel inputLabel2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JSeparator jSeparator1;

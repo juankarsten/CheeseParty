@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import sun.misc.IOUtils;
 
 /*
@@ -36,6 +37,7 @@ public class FileByteWriter {
         try {
             file.write(b);
             file.close();
+            JOptionPane.showMessageDialog(null, "Done!");
         } catch (IOException ex) {
             Logger.getLogger(FileByteReader.class.getName()).log(Level.SEVERE, null, ex);
         }
