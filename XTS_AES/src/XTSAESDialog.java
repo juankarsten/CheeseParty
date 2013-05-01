@@ -1,5 +1,12 @@
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 /*
@@ -252,7 +259,6 @@ public class XTSAESDialog extends javax.swing.JDialog {
 
     private void pathKeyFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pathKeyFieldActionPerformed
         // TODO add your handling code here:
-        
     }//GEN-LAST:event_pathKeyFieldActionPerformed
 
     private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputButtonActionPerformed
@@ -270,41 +276,63 @@ public class XTSAESDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_pathOutputFieldActionPerformed
 
     private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptButtonActionPerformed
-        // TODO add your handling code here:
+        BufferedReader buff = null;
+        try {
+            // TODO add your handling code here:
 
-        String input=pathInputField.getText();
-        String key=pathKeyField.getText();
-        String output=pathOutputField.getText();
-        
-        FileByteReader inputReader=new FileByteReader(input);
-        FileByteReader keyReader=new FileByteReader(key);
-        FileByteWriter outputWriter=new FileByteWriter(output);
-        
-        XTSAES xtsaes=new XTSAES();
-        byte[] P=inputReader.read();
-        byte[] keys=keyReader.read();
-        byte[] outputs=XTSUtils.unify(xtsaes.XTSAESEnc(P, keys, P.length/16+1));
-        
-        outputWriter.write(outputs);
+
+            String input = pathInputField.getText();
+            String key = pathKeyField.getText();
+            String output = pathOutputField.getText();
+            FileByteReader inputReader = new FileByteReader(input);
+            FileByteReader keyReader = new FileByteReader(key);
+            File file = new File(key);
+            buff = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            String keyInput = buff.readLine();
+
+            FileByteWriter outputWriter = new FileByteWriter(output);
+            XTSAES xtsaes = new XTSAES();
+            byte[] P = inputReader.read();
+            byte[] keys = Util.hex2byte(keyInput);
+            byte[] outputs = XTSUtils.unify(xtsaes.XTSAESEnc(P, keys, P.length / 16 + 1));
+            outputWriter.write(outputs);
+        } catch (IOException ex) {
+            Logger.getLogger(XTSAESDialog.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                buff.close();
+            } catch (IOException ex) {
+                Logger.getLogger(XTSAESDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_encryptButtonActionPerformed
 
     private void decryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decryptButtonActionPerformed
-        // TODO add your handling code here:
-        String inputDec=pathInputField.getText();
-        String keyDec=pathKeyField.getText();
-        String outputDec=pathOutputField.getText();
-        
-        FileByteReader inputReader=new FileByteReader(inputDec);
-        FileByteReader keyReader=new FileByteReader(keyDec);
-        FileByteWriter outputWriter=new FileByteWriter(outputDec);
-        
-        XTSAES xtsaes=new XTSAES();
-        byte[] PDec=inputReader.read();
-        byte[] keysDec=keyReader.read();
-        byte[] outputsDec=XTSUtils.unify(xtsaes.XTSAESDec(PDec, keysDec, PDec.length/16+1));
-        
-        outputWriter.write(outputsDec);
-        
+        try {
+            // TODO add your handling code here:
+            BufferedReader reBuff = null;
+
+            String inputDec = pathInputField.getText();
+            String keyDec = pathKeyField.getText();
+            String outputDec = pathOutputField.getText();
+
+            FileByteReader inputReader = new FileByteReader(inputDec);
+            FileByteReader keyReader = new FileByteReader(keyDec);
+            FileByteWriter outputWriter = new FileByteWriter(outputDec);
+
+            File fileDec = new File(keyDec);
+            reBuff = new BufferedReader(new InputStreamReader(new FileInputStream(fileDec)));
+            String keyInputDec = reBuff.readLine();
+
+            XTSAES xtsaes = new XTSAES();
+            byte[] PDec = inputReader.read();
+            byte[] keysDec = Util.hex2byte(keyInputDec);
+            byte[] outputsDec = XTSUtils.unify(xtsaes.XTSAESDec(PDec, keysDec, PDec.length / 16 + 1));
+            outputWriter.write(outputsDec);
+        } catch (IOException ex) {
+            Logger.getLogger(XTSAESDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_decryptButtonActionPerformed
 
     /**
