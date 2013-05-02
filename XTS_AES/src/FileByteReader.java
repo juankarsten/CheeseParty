@@ -16,7 +16,9 @@ import java.util.logging.Logger;
  */
 public class FileByteReader {
     RandomAccessFile file;
-            
+    
+    
+    
     public FileByteReader(String filename) {
         try {
             file=new RandomAccessFile(filename, "r");
