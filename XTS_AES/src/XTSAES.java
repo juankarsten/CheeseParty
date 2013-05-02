@@ -10,28 +10,10 @@ import java.util.Random;
 /**
  *
  * @author juan.karsten
+ * 
  */
 public class XTSAES {
-//    private byte[] tweak;
-//    private byte plainText[][];
-//    private byte key1[];
-//    private byte key2[];
-//    private PrimitiveMultiplication primitiveMultiplication;
-//    
-//    public XTSAES(byte[] plainText,byte []keys,int blocksize) {
-//        for(int ii=0;ii<blocksize;ii++){
-//            this.plainText[ii]=Arrays.copyOfRange(plainText, ii*8, (ii+1)*8);
-//        }
-//        key1=Arrays.copyOfRange(keys, 0, 16);
-//        key2=Arrays.copyOfRange(keys, 16, 32);
-//        tweak=XTSUtils.generateTweak();
-//        
-//        AES aes=new AES();
-//        aes.setKey(key2);
-//        primitiveMultiplication=new PrimitiveMultiplication(aes.encrypt(tweak), blocksize);
-//    }
-    
-    private final int TOTAL_THREAD=100;
+
     
     public byte[] XTSAESBlockEnc(byte[] key1, byte[] P, int j,PrimitiveMultiplication primitiveMultiplication){
         byte T[]=primitiveMultiplication.getSequenceMultiplication(j);
@@ -135,3 +117,4 @@ public class XTSAES {
         return P;
     }
 }
+
