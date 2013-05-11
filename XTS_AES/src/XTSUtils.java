@@ -76,10 +76,11 @@ public class XTSUtils {
         return c;
     }
     
-    public static byte[] unify(byte[][] a){
-        byte hasil[]=new byte[a.length*16];
+    public static byte[] unify(byte[][] a,int len){
+        byte hasil[]=new byte[len];
         for(int ii=0,kk=0;ii<a.length;ii++){
-            for(int jj=0;jj<16;jj++){
+            for(int jj=0;jj<a[ii].length;jj++){
+                if(kk>=len) break;
                 hasil[kk++]=a[ii][jj];
             }
         }

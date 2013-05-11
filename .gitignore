@@ -5,3 +5,4 @@
 *.war
 *.ear
 /XTS_AES/build/
+/XTS_AES/dist/

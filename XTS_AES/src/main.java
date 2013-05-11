@@ -76,7 +76,7 @@ public class main {
 
     public static void printMatrix(byte[] a) {
         for (int ii = 0; ii < a.length; ii++) {
-            System.out.println(a[ii]);
-        }
+            System.out.print(a[ii]);
+        }System.out.println();
     }
 }

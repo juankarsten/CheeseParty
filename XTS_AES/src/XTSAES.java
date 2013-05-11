@@ -1,6 +1,8 @@
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this template, choose Tools | Templates
@@ -31,7 +33,6 @@ public class XTSAES {
 //        primitiveMultiplication=new PrimitiveMultiplication(aes.encrypt(tweak), blocksize);
 //    }
     
-    private final int TOTAL_THREAD=100;
     
     public byte[] XTSAESBlockEnc(byte[] key1, byte[] P, int j,PrimitiveMultiplication primitiveMultiplication){
         byte T[]=primitiveMultiplication.getSequenceMultiplication(j);
@@ -43,7 +44,7 @@ public class XTSAES {
         return C;
     }
     
-    public byte[][] XTSAESEnc(byte[] P,byte []keys,int blocksize){
+    public Result XTSAESEnc(byte[] P,byte []keys,int blocksize){
         byte[] tweak;
         byte plainText[][]=new byte[blocksize][16];
         byte key1[];
@@ -57,12 +58,12 @@ public class XTSAES {
         
         key1=Arrays.copyOfRange(keys, 0, 16);
         key2=Arrays.copyOfRange(keys, 16, 32);
-        tweak=XTSUtils.generateTweak();
+        //tweak=XTSUtils.generateTweak();
         tweak=new byte[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
         
         AES aes=new AES();
         aes.setKey(key2);
-        main.printMatrix(aes.encrypt(tweak));
+        //main.printMatrix(aes.encrypt(tweak));
         primitiveMultiplication=new PrimitiveMultiplication(aes.encrypt(tweak), blocksize);
         
         byte C[][]=new byte[blocksize][16];
@@ -72,16 +73,22 @@ public class XTSAES {
         }
         
         int b=P.length%16;
+        System.out.println("lebih"+b);
+        int totalLength=(C.length-1)*16;
         if(b==0){
             C[blocksize-2]=XTSAESBlockEnc(key1, plainText[blocksize-2] ,blocksize-2, primitiveMultiplication);
             C[blocksize-1]=new byte[16];
+          
         }else{
             byte CC[]=XTSAESBlockEnc(key1, plainText[blocksize-2] ,blocksize-2, primitiveMultiplication);
             byte PP[]=XTSUtils.concat(plainText[blocksize-1], CC, b);
             C[blocksize-1]=XTSUtils.takeFirstBits(CC, b);
+            C[blocksize-1]=Arrays.copyOfRange(C[blocksize-1], 0, b);
             C[blocksize-2]=XTSAESBlockEnc(key1, PP ,blocksize-1, primitiveMultiplication);
+            //C[blocksize-2]=Arrays.copyOfRange(C[blocksize-2], 0, b);
+            totalLength+=b;
         }
-        return C;
+        return new Result(C, totalLength);
     }
     
     /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,7 +102,7 @@ public class XTSAES {
         return P;
     }
     
-    public byte[][] XTSAESDec(byte[] C,byte []keys,int blocksize){
+    public Result XTSAESDec(byte[] C,byte []keys,int blocksize){
         byte[] tweak;
         byte cipherText[][]=new byte[blocksize][16];
         byte key1[];
@@ -122,16 +129,37 @@ public class XTSAES {
             
         }
         
-        int b=P.length%16;
+        int b=C.length%16;
+        System.out.println("lebihdec"+b);
+        int len=(P.length-1)*16;
         if(b==0){
             P[blocksize-2]=XTSAESBlockDec(key1, cipherText[blocksize-2] ,blocksize-2, primitiveMultiplication);
             P[blocksize-1]=new byte[16];
+          
         }else{
-            byte PP[]=XTSAESBlockDec(key1, cipherText[blocksize-2] ,blocksize-1, primitiveMultiplication);
-            byte CC[]=XTSUtils.concat(cipherText[blocksize-1], PP, b);
+            byte CC[]=XTSAESBlockDec(key1, cipherText[blocksize-2] ,blocksize-1, primitiveMultiplication);
+            byte PP[]=XTSUtils.concat(cipherText[blocksize-1], CC, b);
             P[blocksize-1]=XTSUtils.takeFirstBits(CC, b);
-            P[blocksize-2]=XTSAESBlockEnc(key1, CC ,blocksize-2, primitiveMultiplication);
+            P[blocksize-1]=Arrays.copyOfRange(P[blocksize-1], 0, b);
+            P[blocksize-2]=XTSAESBlockDec(key1, PP ,blocksize-2, primitiveMultiplication);
+            
+            len+=b;
         }
-        return P;
+        return new Result(P,len);
+        
+//        int b=C.length%16;
+//        System.out.println(b);
+//        if(b==0){
+//            P[blocksize-2]=XTSAESBlockDec(key1, cipherText[blocksize-2] ,blocksize-2, primitiveMultiplication);
+//            P[blocksize-1]=new byte[16];
+//            System.out.println("here");
+//        }else{
+//            byte PP[]=XTSAESBlockDec(key1, cipherText[blocksize-2] ,blocksize-1, primitiveMultiplication);
+//            byte CC[]=XTSUtils.concat(cipherText[blocksize-1], PP, b);
+//            P[blocksize-1]=XTSUtils.takeFirstBits(CC, b);
+//            P[blocksize-2]=XTSAESBlockDec(key1, CC ,blocksize-2, primitiveMultiplication);
+//        }
+//        return P;
     }
 }
+
