@@ -261,6 +261,9 @@ public class XTSAESDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_pathKeyFieldActionPerformed
 
+    /* Method outputButtonActionPerformed sebagai listener jika button
+     * Output ditekan
+     */
     private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputButtonActionPerformed
         final JFileChooser fc = new JFileChooser();
 
@@ -275,7 +278,11 @@ public class XTSAESDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_pathOutputFieldActionPerformed
 
+    /* Method encryptButtonActionPerformed sebagai listener jika button
+     * Encrypt ditekan
+     */
     private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptButtonActionPerformed
+<<<<<<< HEAD
         // TODO add your handling code here:
 //        String input=pathInputField.getText();
 //        String key=pathKeyField.getText();
@@ -292,20 +299,18 @@ public class XTSAESDialog extends javax.swing.JDialog {
 //        
 //        outputWriter.write(outputs);
 //=======
+=======
+>>>>>>> 2e75a8620b2fd93cf954b0de5c98a0b6e6424bb5
         BufferedReader buff = null;
         try {
             // TODO add your handling code here:
-
-
             String input = pathInputField.getText();
             String key = pathKeyField.getText();
             String output = pathOutputField.getText();
             FileByteReader inputReader = new FileByteReader(input);
-            FileByteReader keyReader = new FileByteReader(key);
             File file = new File(key);
             buff = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             String keyInput = buff.readLine();
-
             FileByteWriter outputWriter = new FileByteWriter(output);
             XTSAES xtsaes = new XTSAES();
             byte[] P = inputReader.read();
@@ -331,6 +336,9 @@ public class XTSAESDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_encryptButtonActionPerformed
 
+    /* Method decryptButtonActionPerformed sebagai listener jika button
+     * Decrypt ditekan
+     */
     private void decryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decryptButtonActionPerformed
         try {
             // TODO add your handling code here:
@@ -424,3 +432,4 @@ public class XTSAESDialog extends javax.swing.JDialog {
     private javax.swing.JTextField pathOutputField;
     // End of variables declaration//GEN-END:variables
 }
+

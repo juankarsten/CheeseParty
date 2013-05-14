@@ -14,8 +14,7 @@ public class PrimitiveMultiplication {
     private byte[][] a;
     
     public PrimitiveMultiplication(byte[] data,int length) {
-        //System.out.println("data: "+data.length);
-        //main.printMatrix(data);
+       
         a=new byte[length][16];
         a[0]=Arrays.copyOf(data, 16);
         for(int ii=0;ii<length-1;ii++){
@@ -25,8 +24,6 @@ public class PrimitiveMultiplication {
             }
         }
     }
-    
-    
     
     public byte[] getSequenceMultiplication(int j){
         return a[j];
